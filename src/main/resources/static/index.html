@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>短链生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        #short-link {
+            font-weight: bold;
+            font-size: 18px;
+            color: #4CAF50;
+            animation: fadeIn 1s ease;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group input, .input-group button {
+            flex: 1;
+        }
+
+        .result-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1><i class="fas fa-link"></i> 短链生成器</h1>
+    <div class="input-group">
+        <input type="text" id="original-link" placeholder="输入原始链接">
+        <button id="generate-btn">生成短链</button>
+    </div>
+    <div class="result-container">
+        <p>生成的短链: <span id="short-link"></span></p>
+    </div>
+</div>
+
+<script>
+    $('#generate-btn').click(function() {
+        var originalLink = $('#original-link').val();
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/u',
+            data: originalLink,
+            contentType: 'text/plain; charset=UTF-8',
+            success: function(data) {
+                $('#short-link').text(data);
+                copyToClipboard(data);
+            },
+            error: function() {
+                alert('生成短链失败,请稍后重试。');
+            }
+        });
+    });
+
+    function copyToClipboard(text) {
+        var tempInput = $("<input>");
+        $("body").append(tempInput);
+        tempInput.val(text).select();
+        document.execCommand("copy");
+        tempInput.remove();
+    }
+</script>
+</body>
+</html>
