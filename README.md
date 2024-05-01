@@ -6,3 +6,4 @@
 ## 使用
 1. 需要准备redis环境
 2. 发生跨域问题调整 `WebMvcConfigurer`
+3. 页面在`resources/static`

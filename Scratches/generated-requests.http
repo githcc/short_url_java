@@ -1,9 +1,7 @@
+###
+GET http://localhost:8080/u/d83b1b
 
 ###
-GET http://localhost:8080/u/1d2480
-
-###
-POST http://localhost:8080/u/
-Content-Type: application/json
+POST http://localhost:8080/u
 
 https://githcc.github.io/navigation_html/
